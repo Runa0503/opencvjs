@@ -44,7 +44,7 @@
   
   //captureButton.addEventListener('click', () => {
     // Draw the video frame to the canvas.
-  while (a < 10) {
+  var t = setInterval(function() {
     context.drawImage(player, 0, 0, canvas.width, canvas.height);
 
     // OpenCVでグレーに変換、表示
@@ -52,12 +52,13 @@
     let dst = new cv.Mat();
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
     cv.imshow("canvas2",dst)
-    //src.delete()
-    //dst.delete()
+    src.delete()
+    dst.delete()
     
     a++;
     document.write(a);
-  }
+      
+  }, 1000);
   //});
 
   navigator.mediaDevices.getUserMedia(constraints)
