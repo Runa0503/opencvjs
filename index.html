@@ -11,6 +11,7 @@
         <video id="player" controls playsinline muted autoplay></video>
         
         <button id="capture">Capture</button>
+        <button id="start">スタート</button>
         
         <canvas id="canvas" width=320 height=240></canvas>
         <canvas id="canvas2" width=320 height=240></canvas>
@@ -23,13 +24,25 @@
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
   const captureButton = document.getElementById('capture');
+  const startButton = document.getElementById('start');
+  var flag = 0;
 
   const constraints = {
     video: true,
   };
 
-  captureButton.addEventListener('click', () => {
+  startButton.addEventListener('click', () => {
+    if (flag == 0) {
+        flag = 1;
+    }
+    //else if(flag ==1){
+    //    flag = 0;
+    //}  
+  });
+  
+  //captureButton.addEventListener('click', () => {
     // Draw the video frame to the canvas.
+  while (flag == 1) {
     context.drawImage(player, 0, 0, canvas.width, canvas.height);
 
     // OpenCVでグレーに変換、表示
@@ -39,7 +52,8 @@
     cv.imshow("canvas2",dst)
     src.delete()
     dst.delete()
-  });
+  }
+  //});
 
   navigator.mediaDevices.getUserMedia(constraints)
     .then((stream) => {
