@@ -26,6 +26,7 @@
   const captureButton = document.getElementById('capture');
   const startButton = document.getElementById('start');
   var flag = 0;
+  var a = 0;
 
   const constraints = {
     video: true,
@@ -33,7 +34,7 @@
 
   startButton.addEventListener('click', () => {
     if (flag == 0) {
-        flag = 1;
+            //flag = 1;
         alert('フラグ')
     }
     //else if(flag ==1){
@@ -43,7 +44,7 @@
   
   //captureButton.addEventListener('click', () => {
     // Draw the video frame to the canvas.
-  while (flag == 1) {
+  while (a < 10) {
     context.drawImage(player, 0, 0, canvas.width, canvas.height);
 
     // OpenCVでグレーに変換、表示
@@ -53,6 +54,8 @@
     cv.imshow("canvas2",dst)
     src.delete()
     dst.delete()
+    
+    a++;
   }
   //});
 
