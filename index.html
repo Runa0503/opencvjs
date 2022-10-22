@@ -42,24 +42,32 @@
     //}  
   });
   
-  //captureButton.addEventListener('click', () => {
+  captureButton.addEventListener('click', () => {
     // Draw the video frame to the canvas.
-  var t = setInterval(function() {
     context.drawImage(player, 0, 0, canvas.width, canvas.height);
 
-    // OpenCVでグレーに変換、表示
+    // OpenCVでグレーに変換
     let src = cv.imread('canvas');
     let dst = new cv.Mat();
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+      
+    //円の検出
+      
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, dp=1, minDist=20, param1=100, param2=60, minRadius=0, maxRadius=0)
+
+    circles = np.uint16(np.around(circles))
+
+    for circle in circles[0, :]:
+        # 円周を描画する
+        cv2.circle(img, (circle[0], circle[1]), circle[2], (0, 165, 255), 5)
+        # 中心点を描画する
+        cv2.circle(img, (circle[0], circle[1]), 2, (0, 0, 255), 3)
+    
+    //表示
     cv.imshow("canvas2",dst)
     src.delete()
     dst.delete()
-    
-    a++;
-    document.write(a);
-      
-  }, 1000);
-  //});
+  });
 
   navigator.mediaDevices.getUserMedia(constraints)
     .then((stream) => {
